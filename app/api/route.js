@@ -2,6 +2,7 @@ import dbConnect from '../../utils/dbConnect';
 import Resource from '../../models/resource';
 
 export async function GET(req) {
+  await dbConnect();
   const foundResources = await Resource.find();
   // console.log('******************************', foundResources);
   // return new Response(JSON.stringify({ name: '--hello world' }));
