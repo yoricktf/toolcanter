@@ -1,4 +1,5 @@
 import styles from './page.module.css';
+import Link from 'next/link';
 
 export default async function Home() {
   interface Resource {
@@ -38,9 +39,22 @@ export default async function Home() {
 
   return (
     <main className={styles.main}>
-      <h1>Resources</h1>
+      <h1>Yoz&apos;s Toolbox</h1>
+      <p className={styles.description}>
+        this is a collection of tools and resources that I have put together for
+        myself and anyone else that is interested in Web Development
+      </p>
       {resources.map((resource: Resource) => {
-        return <h1 key={resource?._id}>{resource?.title}</h1>;
+        return (
+          <div key={resource._id} className={styles.card}>
+            <h2>{resource.title}</h2>
+            <p>{resource.description}</p>
+            {resource.category.map((category: string) => (
+              <p key={category}>{category}</p>
+            ))}
+            <Link href={`resource/${resource._id}`}>{resource.title}</Link>
+          </div>
+        );
       })}
     </main>
   );

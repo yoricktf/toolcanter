@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import React from 'react';
 
@@ -10,6 +11,7 @@ const SigninButton = () => {
   if (session && session.user) {
     return (
       <div className='flex gap-4 ml-auto'>
+        <Link href='/'> Home </Link>
         <p className='text-sky-600'>{session.user.name}</p>
         {/* <p className='text-sky-600'>{session?.user?.image}</p> */}
         <Image
@@ -25,9 +27,12 @@ const SigninButton = () => {
     );
   }
   return (
-    <button onClick={() => signIn()} className='text-green-600 ml-auto'>
-      Sign In
-    </button>
+    <>
+      <Link href='/'> Home </Link>
+      <button onClick={() => signIn()} className='text-green-600 ml-auto'>
+        Sign In
+      </button>
+    </>
   );
 };
 
