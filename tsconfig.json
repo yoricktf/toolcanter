@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/layout.jsx",
-    "utils/mongoDBAdapter.js"
+    "utils/mongoDBAdapter.js",
+    "app/api/resource/route.jsx"
   ],
   "exclude": ["node_modules"]
 }

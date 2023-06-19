@@ -1,5 +1,5 @@
-import dbConnect from '../../utils/dbConnect';
-import Resource from '../../models/resource';
+import dbConnect from '@/utils/dbConnect';
+import Resource from '@/models/Resource';
 
 export async function GET(req) {
   await dbConnect();

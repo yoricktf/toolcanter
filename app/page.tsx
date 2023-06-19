@@ -29,6 +29,12 @@ export default async function Home() {
 
   const resources = await getData();
 
+  const filteredResources = resources.filter((resource: Resource) => {
+    return resource.published === true;
+  });
+
+  console.log(resources);
+
   // const testSend = sendData({
   //   title: 'test1',
   //   description: 'testdescription',
@@ -41,21 +47,24 @@ export default async function Home() {
     <main className={styles.main}>
       <h1>Yoz&apos;s Toolbox</h1>
       <p className={styles.description}>
-        this is a collection of {resources.length} tools and resources that I
-        have put together for myself and anyone else that is interested in Web
-        Development
+        this is a collection of {filteredResources.length} tools and resources
+        that I have put together for myself and anyone else that is interested
+        in Web Development
       </p>
-      {resources.map((resource: Resource) => {
+      {filteredResources.map((resource: Resource) => {
         return (
-          <div key={resource._id} className={styles.card}>
+          <Link
+            href={`resource/${resource._id}`}
+            key={resource._id}
+            className={styles.card}
+          >
             <h2>{resource.title}</h2>
             <p>{resource.description}</p>
             {resource.category}
             {/* {resource.category.map((category: string) => (
               <p key={category}>{category}</p>
             ))} */}
-            <Link href={`resource/${resource._id}`}>{resource.title}</Link>
-          </div>
+          </Link>
         );
       })}
     </main>

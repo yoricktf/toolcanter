@@ -2,10 +2,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const Recommend = () => {
   const { data: session } = useSession();
-
+  const router = useRouter();
   // const [resource, setResource] = useState();
 
   const handleSubmit = async (event: any) => {
@@ -17,15 +18,12 @@ const Recommend = () => {
       contributorsGithubID: session?.user?.id,
       published: false,
     };
-    console.log(
-      '---------------------------------------',
-      typeof dataWithContributer
-    );
     const response = await fetch('http://localhost:3000/api/resource', {
       method: 'POST',
       body: JSON.stringify(dataWithContributer),
     });
     const data = await response.json();
+    router.push(`/resource/${data._id}`);
     console.log('response>>>>>>>', data);
   };
 
