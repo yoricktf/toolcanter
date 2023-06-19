@@ -23,6 +23,7 @@ const SigninButton = () => {
         <button onClick={() => signOut()} className='text-red-600'>
           Sign Out
         </button>
+        <Link href='/recommend'>Recommend</Link>
       </div>
     );
   }

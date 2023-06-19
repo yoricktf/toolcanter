@@ -6,7 +6,8 @@ const resourceSchema = new Schema(
     description: String,
     url: String,
     image: String,
-    category: Array,
+    categories: Array,
+    contributorsGithubID: String,
     published: Boolean,
   },
   {

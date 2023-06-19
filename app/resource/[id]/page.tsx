@@ -6,9 +6,7 @@ const Page = async ({ params }) => {
     const specificResource = await res.json();
     return specificResource;
   }
-
   const resource = await getResource();
-  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&', resource);
   const { title, description, _id, url, image, category, createdAt } = resource;
 
   return (

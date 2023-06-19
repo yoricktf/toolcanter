@@ -41,17 +41,19 @@ export default async function Home() {
     <main className={styles.main}>
       <h1>Yoz&apos;s Toolbox</h1>
       <p className={styles.description}>
-        this is a collection of tools and resources that I have put together for
-        myself and anyone else that is interested in Web Development
+        this is a collection of {resources.length} tools and resources that I
+        have put together for myself and anyone else that is interested in Web
+        Development
       </p>
       {resources.map((resource: Resource) => {
         return (
           <div key={resource._id} className={styles.card}>
             <h2>{resource.title}</h2>
             <p>{resource.description}</p>
-            {resource.category.map((category: string) => (
+            {resource.category}
+            {/* {resource.category.map((category: string) => (
               <p key={category}>{category}</p>
-            ))}
+            ))} */}
             <Link href={`resource/${resource._id}`}>{resource.title}</Link>
           </div>
         );
