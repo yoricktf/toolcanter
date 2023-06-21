@@ -9,12 +9,17 @@ export async function GET(request: Request, context: { params: any }) {
   const resource = await Resource.findById(context.params?.id);
   return new Response(JSON.stringify(resource));
 }
+
 export async function PATCH(request: Request, context: { params: any }) {
   await dbConnect();
+  const newResource = await request.json();
 
-  const resource = await Resource.findByIdAndUpdate(context.params?.id, {
-    $set: { published: true },
-  });
-  console.log(resource);
-  // return new Response(JSON.stringify(resource));
+  const resource = await Resource.findByIdAndUpdate(
+    context.params?.id,
+    {
+      $set: { ...newResource },
+    },
+    { new: true }
+  );
+  return new Response(JSON.stringify(resource));
 }

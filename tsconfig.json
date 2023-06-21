@@ -30,7 +30,8 @@
     ".next/types/**/*.ts",
     "app/layout.jsx",
     "utils/mongoDBAdapter.js",
-    "app/api/resource/route.jsx"
+    "app/api/resource/route.jsx",
+    "app/create/[id]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
