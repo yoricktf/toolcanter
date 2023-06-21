@@ -10,6 +10,12 @@ export async function GET(request: Request, context: { params: any }) {
   return new Response(JSON.stringify(resource));
 }
 
+export async function DELETE(request: Request, context: { params: any }) {
+  await dbConnect();
+  const resource = await Resource.findByIdAndDelete(context.params?.id);
+  return new Response(JSON.stringify(resource));
+}
+
 export async function PATCH(request: Request, context: { params: any }) {
   await dbConnect();
   const newResource = await request.json();

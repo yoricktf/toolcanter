@@ -21,16 +21,25 @@ const Create = () => {
     handleFetch();
   }, []);
 
-  // console.log('----------', resource);
+  const deleteResource = async () => {
+    console.log('delete');
+    const response = await fetch(
+      `http://localhost:3000/api/resource/${params.id}`,
+      {
+        method: 'DELETE',
+      }
+    );
+    const formattedData = await response.json();
+    console.log(formattedData);
+    router.push('/');
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const dataWithContributer = {
       ...resource,
       published: true,
     };
-    console.log(dataWithContributer);
     const response = await fetch(
       `http://localhost:3000/api/resource/${params.id}`,
       {
@@ -85,6 +94,10 @@ const Create = () => {
           />
           <button>submit</button>
         </form>
+
+        <div>
+          <h2 onClick={deleteResource}>Delete Resource</h2>
+        </div>
       </>
     );
   } else {
