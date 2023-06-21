@@ -6,7 +6,6 @@ import React from 'react';
 
 const SigninButton = () => {
   const { data: session } = useSession();
-  // console.log('======================', session);
 
   if (session && session.user) {
     return (
@@ -24,6 +23,7 @@ const SigninButton = () => {
           Sign Out
         </button>
         <Link href='/recommend'>Recommend</Link>
+        <Link href={`/profile/${session.user.id}`}>profile</Link>
       </div>
     );
   }
