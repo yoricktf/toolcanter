@@ -1,7 +1,7 @@
 /** @type {import("next").NextConfig} */
 module.exports = {
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    domains: ['avatars.githubusercontent.com', 'ghchart.rshah.org'],
   },
   reactStrictMode: true,
   // experimental: {
