@@ -19,13 +19,13 @@ export default async function Home() {
     return data;
   }
 
-  async function sendData(data: object) {
-    const res = await fetch('http://localhost:3000/api', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-    return res.json();
-  }
+  // async function sendData(data: object) {
+  //   const res = await fetch('http://localhost:3000/api', {
+  //     method: 'POST',
+  //     body: JSON.stringify(data),
+  //   });
+  //   return res.json();
+  // }
 
   const resources = await getData();
 
