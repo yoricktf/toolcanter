@@ -5,7 +5,7 @@ const userSchema = new Schema(
     name: String,
     image: String,
     admin: Boolean,
-    id: String,
+    githubId: String,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
