@@ -9,31 +9,32 @@ const SigninButton = () => {
 
   if (session && session.user) {
     return (
-      <div className='flex gap-4 ml-auto'>
-        <Link href='/'> Home </Link>
-        <p className='text-sky-600'>{session.user.name}</p>
-        {/* <p className='text-sky-600'>{session?.user?.image}</p> */}
+      <navbar>
+        <section className='navigationLinks'>
+          <Link href='/'> Home </Link>
+          <button onClick={() => signOut()} className=''>
+            Sign Out
+          </button>
+          <Link href='/recommend'>Recommend</Link>
+          <Link href={`/profile/${session.user.id}`}>profile</Link>
+        </section>
         <Image
+          className='avatar'
           src={`${session.user.image}`}
           width={50}
           height={50}
           alt='Picture of the author'
         />
-        <button onClick={() => signOut()} className='text-red-600'>
-          Sign Out
-        </button>
-        <Link href='/recommend'>Recommend</Link>
-        <Link href={`/profile/${session.user.id}`}>profile</Link>
-      </div>
+      </navbar>
     );
   }
   return (
-    <>
+    <navbar>
       <Link href='/'> Home </Link>
-      <button onClick={() => signIn()} className='text-green-600 ml-auto'>
+      <button onClick={() => signIn()} className=''>
         Sign In
       </button>
-    </>
+    </navbar>
   );
 };
 

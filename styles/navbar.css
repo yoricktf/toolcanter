@@ -1,0 +1,20 @@
+navbar {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  border-bottom: 1px solid black;
+  justify-content: space-between;
+}
+
+.navigationLinks {
+  display: flex;
+  align-items: center;
+}
+.navigationLinks > * {
+  margin: 0 5px;
+}
+
+.avatar {
+  border-radius: 10px;
+}
