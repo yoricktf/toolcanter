@@ -13,9 +13,10 @@ export default async function Home() {
   }
 
   async function getData() {
-    const res = await fetch('http://localhost:3000/api');
+    // console.log('=====-------=======------', process.env.ROOT);
+    // const res = await fetch('http://localhost:3000/api');
+    const res = await fetch(`${process.env.ROOT_LOCATION}/api`);
     const data = await res.json();
-    console.log(data);
     return data;
   }
 
@@ -28,12 +29,13 @@ export default async function Home() {
   // }
 
   const resources = await getData();
+  console.log('RESOURCES+++++++++++=', resources);
 
   const filteredResources = resources.filter((resource: Resource) => {
     return resource.published === true;
   });
 
-  console.log(resources);
+  // console.log(resources);
 
   // const testSend = sendData({
   //   title: 'test1',
