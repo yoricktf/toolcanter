@@ -9,14 +9,6 @@ const Profile = () => {
   const [githubUserDetails, setGithubUserDetails] = useState();
   const [unpublishedResources, setUnpublishedResources] = useState();
 
-  const getGithubDetails = async () => {
-    const response = await fetch(
-      `https://api.github.com/user/${session?.user?.id}}`
-    );
-    const UserGitubDetails = await response.json();
-    setGithubUserDetails(UserGitubDetails);
-  };
-
   async function getData() {
     const res = await fetch('http://localhost:3000/api');
     const data = await res.json();
@@ -30,11 +22,20 @@ const Profile = () => {
     getData();
   }, []);
 
+  // console.log('session-------++------', session);
+
   useEffect(() => {
+    const getGithubDetails = async () => {
+      const response = await fetch(
+        `https://api.github.com/user/${session?.user?.githubId}}`
+      );
+      const UserGitubDetails = await response.json();
+      setGithubUserDetails(UserGitubDetails);
+    };
     getGithubDetails();
   }, [session]);
 
-  if (session && session?.user?.id === '26628713') {
+  if (session) {
     return (
       <>
         <h1>hello {githubUserDetails?.name}</h1>
@@ -43,18 +44,21 @@ const Profile = () => {
           src={`https://ghchart.rshah.org/${githubUserDetails?.login}`}
           alt='Name Your Github chart'
         />
-
-        <h2>unpublished resources</h2>
-        {unpublishedResources?.map((resource) => {
-          return (
-            <Link
-              key={resource._id}
-              href={`http://localhost:3000/create/${resource._id}`}
-            >
-              <h2>{resource.title}</h2>
-            </Link>
-          );
-        })}
+        {session.user.admin && (
+          <>
+            <h2>unpublished resources</h2>
+            {unpublishedResources?.map((resource) => {
+              return (
+                <Link
+                  key={resource._id}
+                  href={`http://localhost:3000/create/${resource._id}`}
+                >
+                  <h2>{resource.title}</h2>
+                </Link>
+              );
+            })}
+          </>
+        )}
       </>
     );
   } else {

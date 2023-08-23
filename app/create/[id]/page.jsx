@@ -51,7 +51,7 @@ const Create = () => {
     router.push(`/resource/${params.id}`);
   };
 
-  if (session && session?.user?.id === '26628713') {
+  if (session && session?.user?.admin) {
     return (
       <>
         <h1>Create a resource</h1>
