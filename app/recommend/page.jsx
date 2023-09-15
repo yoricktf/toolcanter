@@ -12,7 +12,7 @@ const Recommend = () => {
   console.log(session);
   console.log(process.env.ROOT_LOCATION);
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formattedFormData = Object.fromEntries(formData);
