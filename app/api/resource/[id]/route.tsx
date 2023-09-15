@@ -19,7 +19,6 @@ export async function DELETE(request: Request, context: { params: any }) {
 export async function PATCH(request: Request, context: { params: any }) {
   await dbConnect();
   const newResource = await request.json();
-
   const resource = await Resource.findByIdAndUpdate(
     context.params?.id,
     {

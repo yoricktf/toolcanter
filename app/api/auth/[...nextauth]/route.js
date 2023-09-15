@@ -23,7 +23,6 @@ const authOptions = NextAuth({
   ],
   callbacks: {
     async session({ session, user, token }) {
-      console.log('0000000000USER', user);
       if (session?.user) {
         session.user.id = user.id;
         session.user.githubId = user.githubId;

@@ -12,7 +12,7 @@ const Create = () => {
   useEffect(() => {
     const handleFetch = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/resource/${params.id}`
+        `${process.env.ROOT_LOCATION}/api/resource/${params.id}`
       );
       const formattedData = await response.json();
       setResource(formattedData);
@@ -24,7 +24,7 @@ const Create = () => {
   const deleteResource = async () => {
     console.log('delete');
     const response = await fetch(
-      `http://localhost:3000/api/resource/${params.id}`,
+      `${process.env.ROOT_LOCATION}/api/resource/${params.id}`,
       {
         method: 'DELETE',
       }
@@ -41,7 +41,7 @@ const Create = () => {
       published: true,
     };
     const response = await fetch(
-      `http://localhost:3000/api/resource/${params.id}`,
+      `${process.env.ROOT_LOCATION}/api/resource/${params.id}`,
       {
         method: 'PATCH',
         body: JSON.stringify(dataWithContributer),

@@ -10,7 +10,7 @@ const Profile = () => {
   const [unpublishedResources, setUnpublishedResources] = useState();
 
   async function getData() {
-    const res = await fetch('http://localhost:3000/api');
+    const res = await fetch('${process.env.ROOT_LOCATION}/api/resource');
     const data = await res.json();
     const filteredResources = data.filter((resource) => {
       return resource.published !== true;

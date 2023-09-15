@@ -31,7 +31,8 @@
     "app/layout.jsx",
     "utils/mongoDBAdapter.js",
     "app/api/resource/route.jsx",
-    "app/create/[id]/page.jsx"
+    "app/create/[id]/page.jsx",
+    "components/email-template.js"
   ],
   "exclude": ["node_modules"]
 }
