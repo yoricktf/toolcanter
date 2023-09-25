@@ -7,6 +7,8 @@ import React from 'react';
 const SigninButton = () => {
   const { data: session } = useSession();
 
+  console.log(session);
+
   if (session && session.user) {
     return (
       <navbar>

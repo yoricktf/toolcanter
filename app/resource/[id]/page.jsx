@@ -2,7 +2,7 @@ import React from 'react';
 
 const Page = async ({ params }) => {
   async function getResource() {
-    const res = await fetch(`http://localhost:3000/api/resource/${params.id}`);
+    const res = await fetch(`/api/resource/${params.id}`);
     const specificResource = await res.json();
     return specificResource;
   }

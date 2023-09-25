@@ -11,9 +11,7 @@ const Create = () => {
 
   useEffect(() => {
     const handleFetch = async () => {
-      const response = await fetch(
-        `http://localhost:3000/api/resource/${params.id}`
-      );
+      const response = await fetch(`/api/resource/${params.id}`);
       const formattedData = await response.json();
       setResource(formattedData);
       // return resource;
@@ -23,12 +21,9 @@ const Create = () => {
 
   const deleteResource = async () => {
     console.log('delete');
-    const response = await fetch(
-      `http://localhost:3000/api/resource/${params.id}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    const response = await fetch(`/api/resource/${params.id}`, {
+      method: 'DELETE',
+    });
     const formattedData = await response.json();
     console.log(formattedData);
     router.push('/');
@@ -40,13 +35,10 @@ const Create = () => {
       ...resource,
       published: true,
     };
-    const response = await fetch(
-      `http://localhost:3000/api/resource/${params.id}`,
-      {
-        method: 'PATCH',
-        body: JSON.stringify(dataWithContributer),
-      }
-    );
+    const response = await fetch(`/api/resource/${params.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(dataWithContributer),
+    });
     const data = await response.json();
     router.push(`/resource/${params.id}`);
   };

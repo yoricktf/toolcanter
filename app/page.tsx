@@ -13,9 +13,8 @@ export default async function Home() {
   }
 
   async function getData() {
-    // console.log('=====-------=======------', process.env.ROOT);
     // const res = await fetch('http://localhost:3000/api');
-    const res = await fetch(`${process.env.ROOT_LOCATION}/api`);
+    const res = await fetch(`/api/resource`);
     const data = await res.json();
     return data;
   }

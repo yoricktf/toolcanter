@@ -10,8 +10,9 @@ const Profile = () => {
   const [unpublishedResources, setUnpublishedResources] = useState();
 
   async function getData() {
-    const res = await fetch('http://localhost:3000/api');
+    const res = await fetch('/api/resource');
     const data = await res.json();
+    console.log('data------___________', data);
     const filteredResources = data.filter((resource) => {
       return resource.published !== true;
     });
@@ -35,6 +36,8 @@ const Profile = () => {
     getGithubDetails();
   }, [session]);
 
+  console.log('unpublishedResources++++++++++++', unpublishedResources);
+
   if (session) {
     return (
       <>
@@ -49,10 +52,7 @@ const Profile = () => {
             <h2>unpublished resources</h2>
             {unpublishedResources?.map((resource) => {
               return (
-                <Link
-                  key={resource._id}
-                  href={`http://localhost:3000/create/${resource._id}`}
-                >
+                <Link key={resource._id} href={`/create/${resource._id}`}>
                   <h2>{resource.title}</h2>
                 </Link>
               );

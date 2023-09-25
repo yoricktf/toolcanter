@@ -9,19 +9,27 @@ const Recommend = () => {
   const router = useRouter();
   // const [resource, setResource] = useState();
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formattedFormData = Object.fromEntries(formData);
     const dataWithContributer = {
       ...formattedFormData,
-      contributorsGithubID: session?.user?.id,
+      contributorsGithubID: session?.user?.githubId,
       published: false,
     };
-    const response = await fetch('http://localhost:3000/api/resource', {
+
+    console.log('dataWithContributer>>>>>>>>>>>>>>>', dataWithContributer);
+    const response = await fetch(`/api/resource`, {
       method: 'POST',
       body: JSON.stringify(dataWithContributer),
     });
+
+    const emailConfirmation = await fetch(`/api/send`, {
+      method: 'POST',
+      body: JSON.stringify(dataWithContributer),
+    });
+
     const data = await response.json();
     router.push(`/resource/${data._id}`);
     console.log('response>>>>>>>', data);
