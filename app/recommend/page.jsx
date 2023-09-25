@@ -9,9 +9,6 @@ const Recommend = () => {
   const router = useRouter();
   // const [resource, setResource] = useState();
 
-  console.log(session);
-  console.log(process.env.ROOT_LOCATION);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -22,22 +19,20 @@ const Recommend = () => {
       published: false,
     };
 
-    // title description url
-
     console.log('dataWithContributer>>>>>>>>>>>>>>>', dataWithContributer);
-    // const response = await fetch(`http://localhost:3000/api/resource`, {
-    //   method: 'POST',
-    //   body: JSON.stringify(dataWithContributer),
-    // });
-
-    const emailConfirmation = await fetch(`http://localhost:3000/api/send`, {
+    const response = await fetch(`/api/resource`, {
       method: 'POST',
       body: JSON.stringify(dataWithContributer),
     });
 
-    // const data = await response.json();
-    // router.push(`/resource/${data._id}`);
-    // console.log('response>>>>>>>', data);
+    const emailConfirmation = await fetch(`/api/send`, {
+      method: 'POST',
+      body: JSON.stringify(dataWithContributer),
+    });
+
+    const data = await response.json();
+    router.push(`/resource/${data._id}`);
+    console.log('response>>>>>>>', data);
   };
 
   // console.log('session', session);

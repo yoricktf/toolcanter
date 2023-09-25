@@ -14,7 +14,7 @@ export async function POST(req, res) {
     const data = await resend.emails.send({
       from: 'toolcenter <onboarding@resend.dev>',
       to: ['yorick.tenfeld@gmail.com'],
-      subject: 'Hello world',
+      subject: 'New Resource Added',
       react: EmailTemplate({ title, description, url }),
     });
 
