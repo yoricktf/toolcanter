@@ -1,12 +1,10 @@
 import React from 'react';
+import dbConnect from '@/utils/dbConnect';
+import Resource from '@/models/Resource';
 
 const Page = async ({ params }) => {
-  async function getResource() {
-    const res = await fetch(`/api/resource/${params.id}`);
-    const specificResource = await res.json();
-    return specificResource;
-  }
-  const resource = await getResource();
+  await dbConnect();
+  const resource = await Resource.findById(params?.id);
   const { title, description, _id, url, image, category, createdAt } = resource;
 
   return (
@@ -17,7 +15,6 @@ const Page = async ({ params }) => {
       <p>{url}</p>
       <p>{image}</p>
       <p>{category}</p>
-      <p>{createdAt}</p>
     </>
   );
 };
