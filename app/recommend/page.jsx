@@ -8,6 +8,24 @@ const Recommend = () => {
   const { data: session } = useSession();
   const router = useRouter();
   // const [resource, setResource] = useState();
+  const resourceCategories = [];
+
+  const categories = [
+    'photo',
+    'illustration',
+    'cheatsheet',
+    'game',
+    'HTML',
+    'CSS',
+    'Reddit',
+    'youtube',
+    'icon',
+    'font',
+  ];
+
+  const toggleCategories = (event) => {
+    resourceCategories.push(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +35,7 @@ const Recommend = () => {
       ...formattedFormData,
       contributorsGithubID: session?.user?.githubId,
       published: false,
+      categories: resourceCategories,
     };
 
     console.log('dataWithContributer>>>>>>>>>>>>>>>', dataWithContributer);
@@ -25,10 +44,10 @@ const Recommend = () => {
       body: JSON.stringify(dataWithContributer),
     });
 
-    const emailConfirmation = await fetch(`/api/send`, {
-      method: 'POST',
-      body: JSON.stringify(dataWithContributer),
-    });
+    // const emailConfirmation = await fetch(`/api/send`, {
+    //   method: 'POST',
+    //   body: JSON.stringify(dataWithContributer),
+    // });
 
     const data = await response.json();
     router.push(`/resource/${data._id}`);
@@ -60,6 +79,20 @@ const Recommend = () => {
           <input name='description' type='text' />
           <label htmlFor='url'>url:</label>
           <input name='url' type='text' />
+          {categories.map((tag) => {
+            return (
+              <div key={tag}>
+                <label htmlFor={tag}>{tag}</label>
+                <input
+                  // name={tag}
+                  type='checkbox'
+                  onChange={(e) => toggleCategories(e)}
+                  value={tag}
+                />
+              </div>
+            );
+          })}
+
           <button>submit</button>
         </form>
       </>
