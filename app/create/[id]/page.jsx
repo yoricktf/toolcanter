@@ -2,12 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
+import { CldUploadWidget } from 'next-cloudinary';
 
 const Create = () => {
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
   const [resource, setResource] = useState();
+  const [imageUrl, setImageUrl] = useState();
+
+  const handleUploadSuccess = (response) => {
+    if (response.event === 'success') {
+      const imageUrl = response.info.secure_url;
+      setImageUrl(imageUrl);
+      // Do something with the imageUrl, such as storing it in state or displaying it to the user
+      console.log('Uploaded image URL:', imageUrl);
+    }
+  };
 
   useEffect(() => {
     const handleFetch = async () => {
@@ -34,6 +45,7 @@ const Create = () => {
     const dataWithContributer = {
       ...resource,
       published: true,
+      image: imageUrl,
     };
     const response = await fetch(`/api/resource/${params.id}`, {
       method: 'PATCH',
@@ -86,6 +98,23 @@ const Create = () => {
           />
           <button>submit</button>
         </form>
+
+        <CldUploadWidget
+          uploadPreset='xnvins2n'
+          onSuccess={handleUploadSuccess} // Set the onSuccess callback
+        >
+          {({ open }) => {
+            function handleOnClick(e) {
+              e.preventDefault();
+              open();
+            }
+            return (
+              <button className='button' onClick={handleOnClick}>
+                Upload an Image
+              </button>
+            );
+          }}
+        </CldUploadWidget>
 
         <div>
           <h2 onClick={deleteResource}>Delete Resource</h2>
