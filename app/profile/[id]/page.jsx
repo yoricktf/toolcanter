@@ -8,11 +8,7 @@ import { authOptions } from '@/app/lib/auth';
 const Profile = async () => {
   const session = await getServerSession(authOptions);
   await dbConnect();
-  const foundResources = await Resource.find();
-  const filteredResources = foundResources.filter((resource) => {
-    return resource.published !== true;
-  });
-
+  const unpublishedResources = await Resource.find({ published: false });
   const getGithubDetails = async () => {
     const response = await fetch(
       `https://api.github.com/user/${session?.user?.githubId}}`
@@ -27,6 +23,8 @@ const Profile = async () => {
       <>
         <h1>hello {githubUserDetails?.name}</h1>
         <img
+          // width={663}
+          // height={104}
           className='githubContributions'
           src={`https://ghchart.rshah.org/${githubUserDetails?.login}`}
           alt='Name Your Github chart'
@@ -34,7 +32,7 @@ const Profile = async () => {
         {session.user.admin && (
           <>
             <h2>unpublished resources</h2>
-            {filteredResources?.map((resource) => {
+            {unpublishedResources?.map((resource) => {
               return (
                 <Link key={resource._id} href={`/create/${resource._id}`}>
                   <h2>{resource.title}</h2>
