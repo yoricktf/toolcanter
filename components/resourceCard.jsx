@@ -8,7 +8,12 @@ const ResourceCard = ({ resource }) => {
     <Link href={`resource/${resource._id}`} className='card'>
       <h2>{resource.title}</h2>
       <p>{resource.description}</p>
-      <Image src={resource.image} height={200} width={200}></Image>
+      <Image
+        src={resource.image}
+        alt={resource.title}
+        height={200}
+        width={200}
+      ></Image>
       {resource.categories.map((category) => (
         <p key={category}>{category}</p>
       ))}
