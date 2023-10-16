@@ -11,7 +11,7 @@ const SigninButton = () => {
 
   if (session && session.user) {
     return (
-      <navbar>
+      <nav>
         <section className='navigationLinks'>
           <Link href='/'> Home </Link>
           <button onClick={() => signOut()} className=''>
@@ -27,16 +27,16 @@ const SigninButton = () => {
           height={50}
           alt='Picture of the author'
         />
-      </navbar>
+      </nav>
     );
   }
   return (
-    <navbar>
+    <nav>
       <Link href='/'> Home </Link>
       <button onClick={() => signIn()} className=''>
         Sign In
       </button>
-    </navbar>
+    </nav>
   );
 };
 
