@@ -1,12 +1,13 @@
 import styles from './page.module.css';
-import Link from 'next/link';
 import dbConnect from '@/utils/dbConnect';
 import Resource from '@/models/Resource';
 import ResourceCard from '@/components/resourceCard';
+import Tag from '@/components/tag';
 
 export default async function Home() {
   await dbConnect();
   const publishedResources = await Resource.find({ published: true });
+  const categories = await Resource.distinct('categories');
 
   return (
     <main className={styles.main}>
@@ -16,10 +17,17 @@ export default async function Home() {
         that I have put together for myself and anyone else that is interested
         in Web Development
       </p>
-      <div className='cards'>
-        {publishedResources.map((resource) => (
-          <ResourceCard key={resource._id} resource={resource} />
-        ))}
+      <div className='resourcesBody'>
+        <menu className='categories'>
+          {categories.map((categoryTitle) => (
+            <Tag key={categoryTitle} categoryTitle={categoryTitle} />
+          ))}
+        </menu>
+        <section className='cards'>
+          {publishedResources.map((resource) => (
+            <ResourceCard key={resource._id} resource={resource} />
+          ))}
+        </section>
       </div>
     </main>
   );
