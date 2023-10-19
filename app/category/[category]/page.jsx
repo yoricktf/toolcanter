@@ -1,21 +1,20 @@
-'use client';
+import dbConnect from '@/utils/dbConnect';
 import React from 'react';
-import { useEffect } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Resource from '@/models/Resource';
+import ResourceCard from '@/components/resourceCard';
 
-const Categories = () => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const url = `${pathname}?${searchParams}`;
-    console.log(url);
-    // console.log(searchParams);
-    // You can now use the current URL
-    // ...
-  }, [pathname, searchParams]);
-
-  return <div>categories</div>;
+const Categories = async ({ params }) => {
+  const { category } = params;
+  await dbConnect();
+  const filteredResources = await Resource.find({ categories: category });
+  console.log('filteredResources---------------:', filteredResources);
+  return (
+    <div>
+      {filteredResources.map((resource) => {
+        return <ResourceCard key={resource._id} resource={resource} />;
+      })}
+    </div>
+  );
 };
 
 export default Categories;
