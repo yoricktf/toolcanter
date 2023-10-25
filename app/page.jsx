@@ -7,7 +7,7 @@ import Tag from '@/components/tag';
 export default async function Home() {
   await dbConnect();
   const publishedResources = await Resource.find({ published: true });
-  const categories = await Resource.distinct('categories');
+  const categories = await Resource.distinct('categories', { published: true });
 
   return (
     <main className={styles.main}>
