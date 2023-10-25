@@ -10,7 +10,8 @@ export async function GET(req) {
 export async function POST(req, res) {
   await dbConnect();
   const resource = await req.json();
-  const newProposedResource = await Resource.create(resource);
+  const updatedResource = { ...resource, puhlished: false };
+  const newProposedResource = await Resource.create(updatedResource);
   console.log(newProposedResource);
   return new Response(JSON.stringify(newProposedResource));
 }
