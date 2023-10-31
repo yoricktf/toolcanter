@@ -3,13 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { CldUploadWidget } from 'next-cloudinary';
+import useSWR from 'swr';
 
 const Create = () => {
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
   const [resource, setResource] = useState();
   const [imageUrl, setImageUrl] = useState();
+  const [categories, setCategories] = useState([]);
+  const resourceCategories = [];
 
   const handleUploadSuccess = (response) => {
     if (response.event === 'success') {
@@ -20,13 +24,27 @@ const Create = () => {
     }
   };
 
+  const toggleCategories = (event) => {
+    resourceCategories.push(event.target.value);
+  };
+
+  const fetchCategories = async () => {
+    const response = await fetch('/api/categories');
+    const categories = await response.json();
+    console.log('categories===============', categories);
+    setCategories(categories);
+  };
+
+  const handleFetch = async () => {
+    const response = await fetch(`/api/resource/${params.id}`);
+    const formattedData = await response.json();
+    console.log('formattedData==========', formattedData);
+    setResource(formattedData);
+    // return resource;
+  };
+
   useEffect(() => {
-    const handleFetch = async () => {
-      const response = await fetch(`/api/resource/${params.id}`);
-      const formattedData = await response.json();
-      setResource(formattedData);
-      // return resource;
-    };
+    fetchCategories();
     handleFetch();
   }, []);
 
@@ -96,6 +114,20 @@ const Create = () => {
               }));
             }}
           />
+          {categories.map((tag) => {
+            return (
+              <div key={tag}>
+                <label htmlFor={tag}>{tag}</label>
+                <input
+                  // name={tag}
+                  type='checkbox'
+                  checked={resource?.categories.includes(tag) ? true : false}
+                  onChange={(e) => toggleCategories(e)}
+                  value={tag}
+                />
+              </div>
+            );
+          })}
           <button>submit</button>
         </form>
 

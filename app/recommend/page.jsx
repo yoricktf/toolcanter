@@ -10,7 +10,7 @@ const Recommend = () => {
   const resourceCategories = [];
 
   const fetchCategories = async () => {
-    const response = await fetch('api/categories');
+    const response = await fetch('/api/categories');
     const categories = await response.json();
     console.log('categories===============', categories);
     setCategories(categories);
