@@ -10,43 +10,36 @@ const Create = () => {
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const [resource, setResource] = useState();
+  // const [resource, setResource] = useState();
   const [imageUrl, setImageUrl] = useState();
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const resourceCategories = [];
 
   const handleUploadSuccess = (response) => {
     if (response.event === 'success') {
       const imageUrl = response.info.secure_url;
       setImageUrl(imageUrl);
-      // Do something with the imageUrl, such as storing it in state or displaying it to the user
-      console.log('Uploaded image URL:', imageUrl);
     }
   };
+
+  const {
+    data: categories,
+    error: categoryError,
+    isLoading: loadingCategories,
+  } = useSWR('/api/categories', fetcher);
+
+  const {
+    data: resource,
+    error: resourceError,
+    isLoading: loadingResources,
+  } = useSWR(`/api/resource/${params.id}`, fetcher);
+
+  if (categoryError || resourceError) return <div>failed to load</div>;
+  if (loadingCategories || loadingResources) return <div>loading...</div>;
 
   const toggleCategories = (event) => {
     resourceCategories.push(event.target.value);
   };
-
-  const fetchCategories = async () => {
-    const response = await fetch('/api/categories');
-    const categories = await response.json();
-    console.log('categories===============', categories);
-    setCategories(categories);
-  };
-
-  const handleFetch = async () => {
-    const response = await fetch(`/api/resource/${params.id}`);
-    const formattedData = await response.json();
-    console.log('formattedData==========', formattedData);
-    setResource(formattedData);
-    // return resource;
-  };
-
-  useEffect(() => {
-    fetchCategories();
-    handleFetch();
-  }, []);
 
   const deleteResource = async () => {
     console.log('delete');
