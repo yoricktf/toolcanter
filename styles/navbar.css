@@ -3,7 +3,6 @@ nav {
   display: flex;
   flex-direction: row;
   padding: 5px;
-  border-bottom: 1px solid black;
   justify-content: space-between;
   position: fixed;
   background-color: var(--main-color);

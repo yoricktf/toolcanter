@@ -2,22 +2,26 @@ import React from 'react';
 import Link from 'next/link';
 import '@/styles/card.css';
 import Image from 'next/image';
+import { link } from 'fs';
 
 const ResourceCard = ({ resource }) => {
   return (
-    <Link href={`resource/${resource._id}`} className='card'>
-      <h2>{resource.title}</h2>
-      <p>{resource.description}</p>
-      <Image
-        src={resource.image}
-        alt={resource.title}
-        height={200}
-        width={200}
-      ></Image>
+    <div className='card'>
+      <Link href={`resource/${resource._id}`}>
+        <Image
+          src={resource.image}
+          alt={resource.title}
+          height={300}
+          width={300}
+        ></Image>
+        <h2>{resource.title}</h2>
+      </Link>
       {resource.categories.map((category) => (
-        <p key={category}>{category}</p>
+        <Link key={category} href={`category/${category}`}>
+          <p>{category}</p>
+        </Link>
       ))}
-    </Link>
+    </div>
   );
 };
 
