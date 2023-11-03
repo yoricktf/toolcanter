@@ -11,19 +11,23 @@ export default async function Home() {
 
   return (
     <main className={styles.main}>
-      <h1>Yoz&apos;s Toolbox</h1>
-      <p className={styles.description}>
-        this is a collection of {publishedResources.length} tools and resources
-        that I have put together for myself and anyone else that is interested
-        in Web Development
-      </p>
-      <div className='resourcesBody'>
-        <menu className='categories'>
-          {categories.map((categoryTitle) => (
-            <Tag key={categoryTitle} categoryTitle={categoryTitle} />
-          ))}
-        </menu>
-        <section className='cards'>
+      <header className={styles.header}>
+        <h1>Yoz&apos;s Toolbox</h1>
+        <p className={styles.description}>
+          this is a collection of <span>{publishedResources.length}</span> tools
+          and resources that I have put together for myself and anyone else that
+          is interested in Web Development
+        </p>
+      </header>
+      <div className={styles.resourcesBody}>
+        <div>
+          <menu className={styles.categories}>
+            {categories.map((categoryTitle) => (
+              <Tag key={categoryTitle} categoryTitle={categoryTitle} />
+            ))}
+          </menu>
+        </div>
+        <section className={`${styles.cards} cards`}>
           {publishedResources.map((resource) => (
             <ResourceCard key={resource._id} resource={resource} />
           ))}
