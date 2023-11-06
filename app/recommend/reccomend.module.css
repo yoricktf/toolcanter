@@ -1,0 +1,50 @@
+.main {
+  padding-top: var(--nav-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main > h1 {
+  margin-top: 20px;
+  /* font-size: 5rem; */
+}
+
+.tags {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px;
+}
+
+.tag {
+  /* padding: 5px; */
+}
+
+.details {
+  color: grey;
+  font-size: 0.6rem;
+}
+
+.tag > input {
+  margin-right: 10px;
+}
+
+#Forms {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+#Forms > label {
+  margin-top: 10px;
+}
+
+#Forms > input {
+  padding: 5px;
+}
+
+#Forms > button {
+  padding: 5px;
+  margin-top: 10px;
+}

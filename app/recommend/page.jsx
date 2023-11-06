@@ -1,4 +1,5 @@
 'use client';
+import styles from './reccomend.module.css';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -33,22 +34,23 @@ const Recommend = () => {
       ...formattedFormData,
       contributorsGithubID: session?.user?.githubId,
       categories: [...resourceCategories, ...newTagsArray],
+      published: false,
     };
 
     console.log('dataWithContributer>>>>>>>>>>>>>>>', dataWithContributer);
-    // const response = await fetch(`/api/resource`, {
-    //   method: 'POST',
-    //   body: JSON.stringify(dataWithContributer),
-    // });
+    const response = await fetch(`/api/resource`, {
+      method: 'POST',
+      body: JSON.stringify(dataWithContributer),
+    });
 
     // const emailConfirmation = await fetch(`/api/send`, {
     //   method: 'POST',
     //   body: JSON.stringify(dataWithContributer),
     // });
 
-    // const data = await response.json();
-    // router.push(`/resource/${data._id}`);
-    // console.log('response>>>>>>>', data);
+    const data = await response.json();
+    router.push(`/resource/${data._id}`);
+    console.log('response>>>>>>>', data);
   };
 
   // interface Resource {
@@ -61,44 +63,44 @@ const Recommend = () => {
 
   if (session && session.user) {
     return (
-      <>
+      <main className={styles.main}>
         <h1>Recommend</h1>
         <p>
           Recommend page you think would work here! just fill out the form and I
           will check it out and post it up.
         </p>
-        <form onSubmit={handleSubmit}>
+        <form id={styles.Forms} onSubmit={handleSubmit}>
           <label htmlFor='title'>title:</label>
           <input name='title' type='text' />
           <label htmlFor='description'>description:</label>
           <input name='description' type='text' />
           <label htmlFor='url'>url:</label>
           <input name='url' type='text' />
-          {categories.map((tag) => {
-            return (
-              <div key={tag}>
-                <label htmlFor={tag}>{tag}</label>
-                <input
-                  // name={tag}
-                  type='checkbox'
-                  onChange={(e) => toggleCategories(e)}
-                  value={tag}
-                />
-              </div>
-            );
-          })}
-          <label id='newTags'>define your own tags</label>
+          <section className={styles.tags}>
+            {categories.map((tag) => {
+              return (
+                <div className={styles.tag} key={tag}>
+                  <input
+                    type='checkbox'
+                    onChange={(e) => toggleCategories(e)}
+                    value={tag}
+                  />
+                  <label htmlFor={tag}>{tag}</label>
+                </div>
+              );
+            })}
+          </section>
+          <label id='newTags'>define your own tags:</label>
           <input
             name='newTags'
             type='text'
             id='newTags'
-            placeholder='seperate tags with a space'
+            placeholder='CSS HTML Javascript'
           />
-          <p>enter your tags seperated by a space</p>
-
+          <p className={styles.details}>enter your tags seperated by a space</p>
           <button>submit</button>
         </form>
-      </>
+      </main>
     );
   }
   return (
