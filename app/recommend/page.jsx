@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 const Recommend = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [categories, setCategories] = useState([]);
   const resourceCategories = [];
@@ -29,7 +30,12 @@ const Recommend = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formattedFormData = Object.fromEntries(formData);
-    const newTagsArray = formattedFormData.newTags.split(' ');
+    const newTagsArray = formattedFormData.newTags
+      .split(' ')
+      .filter((tag) => tag !== '');
+    // newTagsArray.filter((tag) => tag !== '');
+    console.log('------------newTagsArray: ', newTagsArray);
+
     const dataWithContributer = {
       ...formattedFormData,
       contributorsGithubID: session?.user?.githubId,
@@ -49,7 +55,7 @@ const Recommend = () => {
     // });
 
     const data = await response.json();
-    router.push(`/resource/${data._id}`);
+    // router.push(`/resource/${data._id}`);
     console.log('response>>>>>>>', data);
   };
 
@@ -63,42 +69,53 @@ const Recommend = () => {
 
   if (session && session.user) {
     return (
-      <main className={styles.main}>
+      <main className={`${styles.main} main`}>
         <h1>Recommend</h1>
         <p>
           Recommend page you think would work here! just fill out the form and I
           will check it out and post it up.
         </p>
-        <form id={styles.Forms} onSubmit={handleSubmit}>
-          <label htmlFor='title'>title:</label>
+        <form id={`${styles.Forms} Forms`} onSubmit={handleSubmit}>
+          <label htmlFor='title'>Title:</label>
           <input name='title' type='text' />
-          <label htmlFor='description'>description:</label>
+          <label htmlFor='description'>Description:</label>
           <input name='description' type='text' />
-          <label htmlFor='url'>url:</label>
+          <label htmlFor='url'>Url:</label>
           <input name='url' type='text' />
-          <section className={styles.tags}>
-            {categories.map((tag) => {
-              return (
-                <div className={styles.tag} key={tag}>
-                  <input
-                    type='checkbox'
-                    onChange={(e) => toggleCategories(e)}
-                    value={tag}
-                  />
-                  <label htmlFor={tag}>{tag}</label>
-                </div>
-              );
-            })}
+
+          <section>
+            <p>Tags Section</p>
+            <div className={styles.tags}>
+              {categories.map((tag) => {
+                return (
+                  <div className={styles.tag} key={tag}>
+                    <input
+                      type='checkbox'
+                      onChange={(e) => toggleCategories(e)}
+                      value={tag}
+                    />
+                    <label htmlFor={tag}>{tag}</label>
+                  </div>
+                );
+              })}
+            </div>
+            <div className={styles.customTagsSection}>
+              <label id='newTags'>Define your own tags:</label>
+              <input
+                name='newTags'
+                type='text'
+                id='newTags'
+                placeholder='CSS HTML Javascript'
+              />
+              <p className={styles.details}>
+                enter your tags seperated by a space
+              </p>
+            </div>
           </section>
-          <label id='newTags'>define your own tags:</label>
-          <input
-            name='newTags'
-            type='text'
-            id='newTags'
-            placeholder='CSS HTML Javascript'
-          />
-          <p className={styles.details}>enter your tags seperated by a space</p>
-          <button>submit</button>
+
+          <button className='button submitButton'>
+            <h2>submit</h2>
+          </button>
         </form>
       </main>
     );

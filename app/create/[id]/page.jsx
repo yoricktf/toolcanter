@@ -1,9 +1,11 @@
 'use client';
+import styles from './create.module.css';
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { CldUploadWidget } from 'next-cloudinary';
 import useSWR from 'swr';
+import Image from 'next/image';
 
 const Create = () => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -68,9 +70,9 @@ const Create = () => {
 
   if (session && session?.user?.admin) {
     return (
-      <>
+      <main className={`${styles.main} main`}>
         <h1>Create a resource</h1>
-        <form onSubmit={handleSubmit}>
+        <form className='Forms' onSubmit={handleSubmit}>
           <label htmlFor='title'>title:</label>
           <input
             name='title'
@@ -83,6 +85,25 @@ const Create = () => {
               }));
             }}
           />
+          <CldUploadWidget
+            uploadPreset='xnvins2n'
+            onSuccess={handleUploadSuccess} // Set the onSuccess callback
+          >
+            {({ open }) => {
+              function handleOnClick(e) {
+                e.preventDefault();
+                open();
+              }
+              return (
+                <button
+                  className='button imageUploadButton'
+                  onClick={handleOnClick}
+                >
+                  Upload an Image
+                </button>
+              );
+            }}
+          </CldUploadWidget>
           <label htmlFor='description'>description:</label>
           <input
             name='description'
@@ -121,30 +142,27 @@ const Create = () => {
               </div>
             );
           })}
-          <button>submit</button>
+          <button className='button submitButton'>
+            <h2>submit</h2>
+          </button>
         </form>
 
-        <CldUploadWidget
-          uploadPreset='xnvins2n'
-          onSuccess={handleUploadSuccess} // Set the onSuccess callback
-        >
-          {({ open }) => {
-            function handleOnClick(e) {
-              e.preventDefault();
-              open();
-            }
-            return (
-              <button className='button' onClick={handleOnClick}>
-                Upload an Image
-              </button>
-            );
-          }}
-        </CldUploadWidget>
+        {imageUrl && (
+          <>
+            <h1>hello there is something here</h1>
+            <Image
+              src={imageUrl}
+              alt='image of new resource user has uploaded'
+              width={500}
+              height={250}
+            ></Image>
+          </>
+        )}
 
-        <div>
-          <h2 onClick={deleteResource}>Delete Resource</h2>
-        </div>
-      </>
+        <button className='button deleteButton' onClick={deleteResource}>
+          Delete Resource
+        </button>
+      </main>
     );
   } else {
     return <div>Create</div>;

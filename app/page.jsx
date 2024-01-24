@@ -4,6 +4,8 @@ import Resource from '@/models/Resource';
 import ResourceCard from '@/components/resourceCard';
 import Tag from '@/components/tag';
 
+const contentful = require('contentful');
+
 export default async function Home() {
   await dbConnect();
   const publishedResources = await Resource.find({ published: true });
