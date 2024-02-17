@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation';
 
 const Recommend = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [categories, setCategories] = useState([]);
   const resourceCategories = [];
+
+  console.log('------------session: ', session);
 
   const fetchCategories = async () => {
     const response = await fetch('/api/categories');
@@ -34,11 +36,13 @@ const Recommend = () => {
       .split(' ')
       .filter((tag) => tag !== '');
     // newTagsArray.filter((tag) => tag !== '');
-    console.log('------------newTagsArray: ', newTagsArray);
+    // console.log('------------newTagsArray: ', newTagsArray);
 
     const dataWithContributer = {
       ...formattedFormData,
       contributorsGithubID: session?.user?.githubId,
+      contributorsPhoto: session?.user?.image,
+      contributorsName: session?.user?.name,
       categories: [...resourceCategories, ...newTagsArray],
       published: false,
     };
@@ -55,7 +59,8 @@ const Recommend = () => {
     // });
 
     const data = await response.json();
-    // router.push(`/resource/${data._id}`);
+    router.push(`/resource/${data._id}`);
+
     console.log('response>>>>>>>', data);
   };
 
@@ -67,7 +72,7 @@ const Recommend = () => {
   //   categories: Array<string>;
   // }
 
-  if (session && session.user) {
+  if (status === 'authenticated') {
     return (
       <main className={`${styles.main} main`}>
         <h1>Recommend</h1>
