@@ -12,7 +12,7 @@ export default async function Home() {
   const categories = await Resource.distinct('categories', { published: true });
 
   return (
-    <main className={styles.main}>
+    <>
       <header className={styles.header}>
         <h1>Yoz&apos;s Toolbox</h1>
         <p className={styles.description}>
@@ -35,6 +35,6 @@ export default async function Home() {
           ))}
         </section>
       </div>
-    </main>
+    </>
   );
 }
