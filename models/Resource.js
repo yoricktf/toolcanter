@@ -8,6 +8,8 @@ const resourceSchema = new Schema(
     image: String,
     categories: Array,
     contributorsGithubID: String,
+    contributorsPhoto: String,
+    contributorsName: String,
     published: Boolean,
   },
   {
