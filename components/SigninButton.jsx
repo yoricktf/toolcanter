@@ -31,7 +31,7 @@ const SigninButton = () => {
   return (
     <nav>
       <Link href='/'> Home </Link>
-      <button onClick={() => signIn()} className=''>
+      <button onClick={() => signIn('github')} className=''>
         Sign In
       </button>
     </nav>

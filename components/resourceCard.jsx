@@ -7,7 +7,7 @@ import { link } from 'fs';
 const ResourceCard = ({ resource }) => {
   return (
     <div className='card'>
-      <Link href={`resource/${resource._id}`}>
+      <Link href={`/resource/${resource._id}`}>
         <Image
           src={resource.image}
           alt={resource.title}
@@ -17,7 +17,7 @@ const ResourceCard = ({ resource }) => {
         <h2>{resource.title}</h2>
       </Link>
       {resource.categories.map((category) => (
-        <Link key={category} href={`category/${category}`}>
+        <Link key={category} href={`/category/${category}`}>
           <p>{category}</p>
         </Link>
       ))}
