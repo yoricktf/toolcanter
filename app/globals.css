@@ -1,8 +1,11 @@
 @import '../styles/navbar.css';
 
+main {
+  padding-top: var(--nav-height);
+}
+
 .main,
 .main > form {
-  padding-top: var(--nav-height);
   display: flex;
   flex-direction: column;
   align-items: center;
