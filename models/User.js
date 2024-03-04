@@ -2,10 +2,13 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 const userSchema = new Schema(
   {
+    email: String,
     name: String,
+    userName: String,
+    githubId: String,
     image: String,
     admin: Boolean,
-    githubId: String,
+    favorites: Array,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
