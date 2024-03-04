@@ -8,7 +8,7 @@ const userSchema = new Schema(
     githubId: String,
     image: String,
     admin: Boolean,
-    favorites: Array,
+    favorites: [{ type: Schema.Types.ObjectId, ref: 'Resource' }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
