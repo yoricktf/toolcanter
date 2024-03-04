@@ -18,6 +18,7 @@ export const authOptions = {
           githubId: profile.id,
           image: profile.avatar_url,
           admin: false,
+          favorites: [],
         };
       },
     }),
@@ -30,6 +31,7 @@ export const authOptions = {
         session.user.githubId = user.githubId;
         session.user.email = user.email;
         session.user.admin = user.admin;
+        session.user.favorites = user.favorites;
       }
       return session;
     },
