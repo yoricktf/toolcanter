@@ -2,10 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dbConnect from '@/utils/dbConnect';
 import Resource from '@/models/Resource';
+import User from '@/models/User';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
+import { CldOgImage } from 'next-cloudinary';
 
-const Profile = async () => {
+const Profile = async ({ params }) => {
   const session = await getServerSession(authOptions);
   await dbConnect();
   const unpublishedResources = await Resource.find({ published: false });
@@ -17,6 +19,10 @@ const Profile = async () => {
     return UserGitubDetails;
   };
   const githubUserDetails = await getGithubDetails();
+  const userFavorites = await User.findById(params?.id, {
+    favorites: 1,
+    _id: 0,
+  }).populate('favorites');
 
   if (session) {
     return (
@@ -29,9 +35,21 @@ const Profile = async () => {
           src={`https://ghchart.rshah.org/${githubUserDetails?.login}`}
           alt='Name Your Github chart'
         />
+        <h2>Your Favorites</h2>
+        {session.user.favorites.length === 0 && <p>no favorites</p>}
+        {userFavorites.favorites.map((resource) => {
+          return (
+            <Link key={resource._id} href={`/resource/${resource._id}`}>
+              <h2>{resource.title}</h2>
+            </Link>
+          );
+        })}
         {session.user.admin && (
           <>
             <h2>unpublished resources</h2>
+            {unpublishedResources.length === 0 && (
+              <p>no unpublished resources</p>
+            )}
             {unpublishedResources?.map((resource) => {
               return (
                 <Link key={resource._id} href={`/create/${resource._id}`}>
