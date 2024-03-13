@@ -6,6 +6,7 @@ module.exports = {
       'ghchart.rshah.org',
       'res.cloudinary.com',
       'example.com',
+      'f3.allesedv.com',
     ],
   },
   reactStrictMode: true,
