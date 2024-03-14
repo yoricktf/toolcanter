@@ -6,6 +6,7 @@ import User from '@/models/User';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
 import { CldOgImage } from 'next-cloudinary';
+import ResourcesList from '@/components/resourcesList';
 
 const Profile = async ({ params }) => {
   const session = await getServerSession(authOptions);
@@ -24,6 +25,15 @@ const Profile = async ({ params }) => {
     _id: 0,
   }).populate('favorites');
 
+  const userContributions = await Resource.find({
+    githubId: session?.user?.gitHubId,
+  });
+  console.log(
+    '------------userContributions: ',
+    userContributions.length,
+    '------------userContributions: '
+  );
+
   if (session) {
     return (
       <>
@@ -37,26 +47,25 @@ const Profile = async ({ params }) => {
         />
         <h2>Your Favorites</h2>
         {session.user.favorites.length === 0 && <p>no favorites</p>}
-        {userFavorites.favorites.map((resource) => {
-          return (
-            <Link key={resource._id} href={`/resource/${resource._id}`}>
-              <h2>{resource.title}</h2>
-            </Link>
-          );
-        })}
+        <ResourcesList resources={userFavorites.favorites} />
+        <h2>
+          {githubUserDetails.name} has {userContributions.length} contributions
+        </h2>
+        <ResourcesList resources={userContributions} />
         {session.user.admin && (
           <>
-            <h2>unpublished resources</h2>
+            {/* <h2>unpublished resources</h2>
             {unpublishedResources.length === 0 && (
               <p>no unpublished resources</p>
             )}
+            <ResourcesList resources={unpublishedResources} />
             {unpublishedResources?.map((resource) => {
               return (
                 <Link key={resource._id} href={`/create/${resource._id}`}>
                   <h2>{resource.title}</h2>
                 </Link>
               );
-            })}
+            })} */}
           </>
         )}
       </>
