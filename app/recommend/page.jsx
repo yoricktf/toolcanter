@@ -11,8 +11,6 @@ const Recommend = () => {
   const [categories, setCategories] = useState([]);
   const resourceCategories = [];
 
-  console.log('------------session: ', session);
-
   const fetchCategories = async () => {
     const response = await fetch('/api/categories');
     const categories = await response.json();
@@ -35,16 +33,15 @@ const Recommend = () => {
     const newTagsArray = formattedFormData.newTags
       .split(' ')
       .filter((tag) => tag !== '');
-    // newTagsArray.filter((tag) => tag !== '');
-    // console.log('------------newTagsArray: ', newTagsArray);
 
     const dataWithContributer = {
       ...formattedFormData,
       contributorsGithubID: session?.user?.githubId,
       contributorsPhoto: session?.user?.image,
       contributorsName: session?.user?.name,
+      image: `https://f3.allesedv.com/100/${formattedFormData.url}`,
       categories: [...resourceCategories, ...newTagsArray],
-      published: false,
+      published: true,
     };
 
     console.log('dataWithContributer>>>>>>>>>>>>>>>', dataWithContributer);
@@ -60,8 +57,6 @@ const Recommend = () => {
 
     const data = await response.json();
     router.push(`/resource/${data._id}`);
-
-    console.log('response>>>>>>>', data);
   };
 
   // interface Resource {
@@ -84,10 +79,9 @@ const Recommend = () => {
           <label htmlFor='title'>Title:</label>
           <input name='title' type='text' />
           <label htmlFor='description'>Description:</label>
-          <input name='description' type='text' />
+          <textarea name='description' type='text' rows='5' cols='33' />
           <label htmlFor='url'>Url:</label>
           <input name='url' type='text' />
-
           <section>
             <p>Tags Section</p>
             <div className={styles.tags}>
@@ -117,7 +111,6 @@ const Recommend = () => {
               </p>
             </div>
           </section>
-
           <button className='button submitButton'>
             <h2>submit</h2>
           </button>
