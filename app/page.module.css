@@ -1,4 +1,4 @@
-.header {
+/* .header {
   height: 50vh;
   max-height: 400px;
   display: flex;
@@ -20,23 +20,12 @@
 
 .resourcesBody {
   display: flex;
-}
+} */
 
-.categories {
-  width: 20%;
+/* .categories {
+  width: 200%;
   margin-right: 20px;
   min-width: 200px;
   position: sticky;
   top: 61px;
-}
-
-.categories > li {
-  list-style: none;
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.cards {
-  padding-top: 20px;
-}
+} */

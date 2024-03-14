@@ -11,16 +11,18 @@ const ResourceCard = ({ resource }) => {
         <Image
           src={resource.image}
           alt={resource.title}
-          height={300}
-          width={300}
-        ></Image>
-        <h2>{resource.title}</h2>
+          height={50}
+          width={50}
+        />
+        <h4>{resource.title}</h4>
       </Link>
-      {resource.categories.map((category) => (
-        <Link key={category} href={`/category/${category}`}>
-          <p>{category}</p>
-        </Link>
-      ))}
+      <section className='categories'>
+        {resource.categories.map((category) => (
+          <Link key={category} href={`/category/${category}`}>
+            {category}
+          </Link>
+        ))}
+      </section>
     </div>
   );
 };
