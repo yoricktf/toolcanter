@@ -1,9 +1,14 @@
 @import '../styles/navbar.css';
 @import '../styles/card.css';
 @import '../styles/header.css';
+@import '../styles/categorySelector.css';
 
 main {
   padding-top: var(--nav-height);
+}
+
+.cardSection {
+  margin: 20px;
 }
 
 .description > span {
@@ -65,21 +70,7 @@ main {
 }
 
 .active {
-  background-color: rgb(161, 169, 247);
-}
-
-.categories {
-  width: 20%;
-  margin-right: 20px;
-  min-width: 200px;
-  position: sticky;
-  top: 61px;
-}
-
-.categories > a > li {
-  list-style: none;
-  padding: 5px;
-  border-bottom: 2px solid black;
+  background-color: var(--action-blue);
 }
 
 :root {
