@@ -1,17 +1,9 @@
 @import '../styles/navbar.css';
+@import '../styles/card.css';
+@import '../styles/header.css';
 
 main {
   padding-top: var(--nav-height);
-}
-
-.header {
-  height: 50vh;
-  max-height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--main-color);
 }
 
 .description > span {
@@ -88,16 +80,6 @@ main {
   list-style: none;
   padding: 5px;
   border-bottom: 2px solid black;
-}
-
-.header {
-  height: 50vh;
-  max-height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--main-color);
 }
 
 :root {

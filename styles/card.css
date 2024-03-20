@@ -7,17 +7,27 @@
 }
 
 .card {
-  padding: 5px;
+  padding: 20px 20px 10px;
   display: flex;
-  width: 250px;
-  height: 80px;
   margin: 0;
   flex-direction: column;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   flex-grow: 0;
 }
 
+.card h4 {
+  margin-left: 10px;
+}
+
 .card > a {
   display: flex;
   flex-direction: row;
+}
+
+.cardCategories {
+  font-size: 0.7rem;
+  color: grey;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
 }
