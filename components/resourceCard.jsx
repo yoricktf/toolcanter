@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import '@/styles/card.css';
 import Image from 'next/image';
-import { link } from 'fs';
 
 const ResourceCard = ({ resource }) => {
   return (
@@ -16,11 +14,14 @@ const ResourceCard = ({ resource }) => {
         />
         <h4>{resource.title}</h4>
       </Link>
-      <section className='categories'>
+      <section className='cardCategories'>
         {resource.categories.map((category) => (
-          <Link key={category} href={`/category/${category}`}>
-            {category}
-          </Link>
+          <>
+            <Link key={category} href={`/category/${category}`}>
+              {category}
+            </Link>
+            <p> | </p>
+          </>
         ))}
       </section>
     </div>
