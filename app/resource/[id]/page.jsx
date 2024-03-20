@@ -3,17 +3,19 @@ import dbConnect from '@/utils/dbConnect';
 import Resource from '@/models/Resource';
 import User from '@/models/User';
 import Image from 'next/image';
-import DeleteButton from '@/components/DeleteButton';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
+import ResourcesList from '@/components/resourcesList';
+import SigninButton from '@/components/SigninButton';
+import Button from '@/components/button';
+import { revalidatePath } from 'next/cache';
 
 const Page = async ({ params }) => {
   const session = await getServerSession(authOptions);
   await dbConnect();
   const userId = session?.user?.id;
-  console.log('------------session: ', session);
-
+  // console.log('------------session: ', session.favorites);
   const {
     contributorsPhoto,
     title,
@@ -25,7 +27,18 @@ const Page = async ({ params }) => {
     createdAt,
   } = await Resource.findById(params?.id);
 
+  console.log(new Date(createdAt).toDateString());
+
   let similarResources = [];
+  const checkingFavorites = async () => {
+    'use server';
+    // console.log('------------:checking*************** ');
+
+    const user = await User.findById(userId);
+    return user.favorites.includes(resourceId);
+  };
+  let isFavorite = await checkingFavorites();
+  // console.log('------------isfavorite+++++++++++++++++++++: ', isFavorite);
 
   const handleDelete = async () => {
     'use server';
@@ -35,27 +48,33 @@ const Page = async ({ params }) => {
 
   const handleFavorite = async () => {
     'use server';
-    console.log('------------session: ', session);
     try {
       let user = await User.findById(userId);
       const isFavorite = user.favorites.includes(resourceId);
 
       if (isFavorite) {
-        user.favorites = user.favorites.filter((id) => id !== resourceId);
+        user.favorites = user.favorites.filter(
+          (id) => id.toString() !== resourceId
+        );
       } else {
         user.favorites.push(resourceId);
       }
       user = await user.save();
-      console.log('Updated user:', user);
+      session.user.favorites = user.favorites;
+      console.log('Updated user:::::', user);
+      checkingFavorites();
+      console.log('------------session: ', session);
     } catch (error) {
-      console.error('Error toggling favorite:', error);
+      console.error('Error toggling favorite:::::', error);
       throw error;
     }
+    revalidatePath(`/resource/${resourceId}`);
   };
 
   for (const category of categories) {
     similarResources.push(
       ...(await Resource.find({
+        _id: { $ne: resourceId },
         categories: category,
       }))
     );
@@ -66,43 +85,36 @@ const Page = async ({ params }) => {
       <article>
         <Image
           src={image}
-          height={500}
-          width={500}
+          height={90}
+          width={90}
           alt={`image of the ${title} resource`}
         />
         <Image
           src={contributorsPhoto}
           alt='Picture of the author'
           className='avatar'
-          height={50}
-          width={50}
+          height={30}
+          width={30}
         />
+
         <h1>TITLE: {title}</h1>
 
         <p>DESCRIPTION: {description}</p>
         <p>URL: {url}</p>
-        <p>ADDED ON: {Date(createdAt)}</p>
+        <p>ADDED ON: {new Date(createdAt).toDateString()}</p>
         <p>CATEGORIES: {categories}</p>
         {session?.user.admin && (
-          <form action={handleDelete}>
-            <button>delete the resource</button>
-          </form>
+          <>
+            <form action={handleDelete}>
+              <button>delete the resource</button>
+            </form>
+          </>
         )}
-        {session && (
-          <form action={handleFavorite}>
-            <button>favorite</button>
-          </form>
-        )}
+        {session && <Button handleAction={handleFavorite} state={isFavorite} />}
       </article>
       <section>
         <h2>Similar Resources</h2>
-        {similarResources.map((resource) => (
-          <div key={resource.resourceId}>
-            <h3>TITLE: {resource.title}</h3>
-            <p>DESCRIPTION: {resource.description}</p>
-            <p>CATEGORIES: {resource.categories}</p>
-          </div>
-        ))}
+        <ResourcesList resources={similarResources} />
       </section>
     </>
   );
