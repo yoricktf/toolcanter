@@ -12,6 +12,7 @@ const Profile = async ({ params }) => {
   const session = await getServerSession(authOptions);
   await dbConnect();
   const unpublishedResources = await Resource.find({ published: false });
+
   const getGithubDetails = async () => {
     const response = await fetch(
       `https://api.github.com/user/${session?.user?.githubId}}`
@@ -19,6 +20,7 @@ const Profile = async ({ params }) => {
     const UserGitubDetails = await response.json();
     return UserGitubDetails;
   };
+
   const githubUserDetails = await getGithubDetails();
   const userFavorites = await User.findById(params?.id, {
     favorites: 1,
@@ -33,6 +35,32 @@ const Profile = async ({ params }) => {
     userContributions.length,
     '------------userContributions: '
   );
+
+  const handleAdmin = async (e) => {
+    'use server';
+    try {
+      const userId = params?.id;
+      if (!userId) {
+        console.log('User ID is missing');
+        return;
+      }
+
+      const user = await User.findById(userId);
+      if (!user) {
+        console.log('User not found');
+        return;
+      }
+
+      user.admin = !user.admin;
+
+      const updatedUser = await user.save();
+      console.log(
+        `Admin status toggled for user ${userId}: ${updatedUser.admin}`
+      );
+    } catch (error) {
+      console.error('Error toggling admin status:', error);
+    }
+  };
 
   if (session) {
     return (
@@ -54,6 +82,9 @@ const Profile = async ({ params }) => {
         <ResourcesList resources={userContributions} />
         {session.user.admin && (
           <>
+            <form action={handleAdmin}>
+              <button>Make Admin</button>
+            </form>
             {/* <h2>unpublished resources</h2>
             {unpublishedResources.length === 0 && (
               <p>no unpublished resources</p>
