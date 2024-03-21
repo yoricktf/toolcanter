@@ -1,10 +1,9 @@
 import dbConnect from '@/utils/dbConnect';
 import React from 'react';
 import Resource from '@/models/Resource';
-import ResourceCard from '@/components/resourceCard';
 import Tags from '@/components/tags';
-import styles from '../../page.module.css';
 import ResourcesList from '@/components/resourcesList';
+import QuickFavorites from '@/components/quickFavorites';
 
 const Categories = async ({ params }) => {
   const { category } = params;
@@ -19,6 +18,7 @@ const Categories = async ({ params }) => {
             ? `There Is ${filteredResources.length} item here, why not add some more!`
             : `There Are ${filteredResources.length} items here. `}
         </p>
+        <QuickFavorites />
       </header>
       <div className='resourcesBody'>
         <Tags currentCategory={category} />
