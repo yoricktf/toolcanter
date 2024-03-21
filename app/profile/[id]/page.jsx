@@ -30,11 +30,6 @@ const Profile = async ({ params }) => {
   const userContributions = await Resource.find({
     githubId: session?.user?.gitHubId,
   });
-  console.log(
-    '------------userContributions: ',
-    userContributions.length,
-    '------------userContributions: '
-  );
 
   const handleAdmin = async (e) => {
     'use server';
@@ -81,23 +76,9 @@ const Profile = async ({ params }) => {
         </h2>
         <ResourcesList resources={userContributions} />
         {session.user.admin && (
-          <>
-            <form action={handleAdmin}>
-              <button>Make Admin</button>
-            </form>
-            {/* <h2>unpublished resources</h2>
-            {unpublishedResources.length === 0 && (
-              <p>no unpublished resources</p>
-            )}
-            <ResourcesList resources={unpublishedResources} />
-            {unpublishedResources?.map((resource) => {
-              return (
-                <Link key={resource._id} href={`/create/${resource._id}`}>
-                  <h2>{resource.title}</h2>
-                </Link>
-              );
-            })} */}
-          </>
+          <form action={handleAdmin}>
+            <button>Make Admin</button>
+          </form>
         )}
       </>
     );
