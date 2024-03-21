@@ -11,6 +11,10 @@ const resourceSchema = new Schema(
     contributorsPhoto: String,
     contributorsName: String,
     published: Boolean,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

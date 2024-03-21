@@ -39,6 +39,7 @@ const Recommend = () => {
       contributorsGithubID: session?.user?.githubId,
       contributorsPhoto: session?.user?.image,
       contributorsName: session?.user?.name,
+      author: session?.user?.id,
       image: `https://f3.allesedv.com/100/${formattedFormData.url}`,
       categories: [...resourceCategories, ...newTagsArray],
       published: true,
