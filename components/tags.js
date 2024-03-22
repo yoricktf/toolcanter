@@ -10,7 +10,7 @@ const Tags = async ({ currentCategory = 'all' }) => {
   return (
     <menu className='categories'>
       <Link href={`/`}>
-        <li className={currentCategory === 'all' ? 'active' : null}>All</li>
+        <li className={currentCategory === 'all' ? 'active' : null}>Home</li>
       </Link>
       {categories.map((categoryTitle) => (
         <Link key={categoryTitle} href={`/category/${categoryTitle}`}>
