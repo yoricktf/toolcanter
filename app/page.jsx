@@ -2,7 +2,7 @@ import styles from './page.module.css';
 import dbConnect from '@/utils/dbConnect';
 import Resource from '@/models/Resource';
 import Tags from '@/components/tags';
-import ResourcesList from '@/components/resourcesList';
+import ResourcesList from '@/components/ResourcesList';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
 import User from '@/models/User';

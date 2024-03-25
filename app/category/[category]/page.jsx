@@ -2,7 +2,7 @@ import dbConnect from '@/utils/dbConnect';
 import React from 'react';
 import Resource from '@/models/Resource';
 import Tags from '@/components/tags';
-import ResourcesList from '@/components/resourcesList';
+import ResourcesList from '@/components/ResourcesList';
 import QuickFavorites from '@/components/quickFavorites';
 
 const Categories = async ({ params }) => {

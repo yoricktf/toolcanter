@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
-import ResourcesList from '@/components/resourcesList';
+import ResourcesList from '@/components/ResourcesList';
 import Link from 'next/link';
 import Button from '@/components/button';
 import { revalidatePath } from 'next/cache';

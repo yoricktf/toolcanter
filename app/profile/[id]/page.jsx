@@ -6,7 +6,7 @@ import User from '@/models/User';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
 import { CldOgImage } from 'next-cloudinary';
-import ResourcesList from '@/components/resourcesList';
+import ResourcesList from '@/components/ResourcesList';
 import githubLogo from '../../../public/github-mark.png';
 
 const Profile = async ({ params }) => {
