@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
 import styled from 'styled-components';
+import tinycolor from 'tinycolor2';
 
 const Title = styled.p`
+  color: ${(props) => (props.isDark ? '#fff' : '#000')};
   font-size: 0.8rem;
 `;
 
@@ -26,14 +28,17 @@ const Badge = ({ children }) => {
       const value = (hash >> (i * 8)) & 0xff;
       colour += value.toString(16).padStart(2, '0');
     }
+    let selectedColor = tinycolor('red');
     return colour;
   };
 
   const color = stringToColour(children);
+  let textColor = tinycolor(color).isDark();
+  console.log('------------textColor: ', textColor);
 
   return (
     <Tag color={color}>
-      <Title>{children}</Title>
+      <Title isDark={textColor}>{children}</Title>
     </Tag>
   );
 };
