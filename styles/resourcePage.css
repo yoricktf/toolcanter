@@ -1,0 +1,41 @@
+.mainFacts {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 10px;
+  width: fit-content;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: var(--card-background);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.resourceDetails {
+  display: flex;
+  gap: 20px;
+}
+
+.resourceDescription {
+  max-width: 500px;
+}
+
+.resourceAvatar {
+  position: relative;
+  left: -25px;
+  bottom: -5px;
+}
+
+.checkButton {
+  border: 3px solid black;
+  border-radius: 15px;
+  margin: 5px 0;
+  height: 50px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

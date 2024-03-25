@@ -1,0 +1,25 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.aboutSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.aboutSectionDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 20px;
+}
+
+.githubContributions {
+  max-width: 800px;
+  margin: 0 auto;
+}

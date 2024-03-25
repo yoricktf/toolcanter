@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
 import { CldOgImage } from 'next-cloudinary';
 import ResourcesList from '@/components/resourcesList';
+import githubLogo from '../../../public/github-mark.png';
 
 const Profile = async ({ params }) => {
   const session = await getServerSession(authOptions);
@@ -22,10 +23,17 @@ const Profile = async ({ params }) => {
   };
 
   const githubUserDetails = await getGithubDetails();
-  const userFavorites = await User.findById(params?.id, {
+
+  console.log('------------githubUserDetails: ', githubUserDetails);
+
+  const user = await User.findById(params?.id, {
+    admin: 1,
     favorites: 1,
+    createdAt: 1,
     _id: 0,
   }).populate('favorites');
+
+  console.log('-------&&&&&&&&&&&&&&&-----user: ', user);
 
   const userContributions = await Resource.find({
     githubId: session?.user?.gitHubId,
@@ -59,8 +67,34 @@ const Profile = async ({ params }) => {
 
   if (session) {
     return (
-      <>
-        <h1>hello {githubUserDetails?.name}</h1>
+      <article className='profile'>
+        <section className='aboutSection'>
+          <Image
+            src={githubUserDetails?.avatar_url}
+            width={150}
+            height={150}
+            className='avatar'
+            alt={`${githubUserDetails?.name} avatar image from github`}
+          ></Image>
+          <div className='aboutSectionDetails'>
+            <h1>{githubUserDetails?.name}'s Profile</h1>
+            <Link href={githubUserDetails?.html_url}>
+              <Image width={40} height={40} src={githubLogo}></Image>
+            </Link>
+            {user.admin ? (
+              <p>🟢 Admin Since {new Date(user.createdAt).toDateString()}</p>
+            ) : (
+              <p>User Since {new Date(user.createdAt).toDateString()}</p>
+            )}
+
+            {session.user.admin && (
+              <form action={handleAdmin}>
+                <button>Make Admin</button>
+              </form>
+            )}
+          </div>
+        </section>
+
         <img
           // width={663}
           // height={104}
@@ -68,19 +102,19 @@ const Profile = async ({ params }) => {
           src={`https://ghchart.rshah.org/${githubUserDetails?.login}`}
           alt='Name Your Github chart'
         />
-        <h2>Your Favorites</h2>
-        {session.user.favorites.length === 0 && <p>no favorites</p>}
-        <ResourcesList resources={userFavorites.favorites} />
-        <h2>
-          {githubUserDetails.name} has {userContributions.length} contributions
-        </h2>
-        <ResourcesList resources={userContributions} />
-        {session.user.admin && (
-          <form action={handleAdmin}>
-            <button>Make Admin</button>
-          </form>
-        )}
-      </>
+        <div className='cardSection'>
+          <h2>Favorites</h2>
+          {session.user.favorites.length === 0 && <p>no favorites</p>}
+          <ResourcesList resources={user.favorites} />
+        </div>
+        <div className='cardSection'>
+          <h2>
+            {githubUserDetails.name} has {userContributions.length}{' '}
+            contributions
+          </h2>
+          <ResourcesList resources={userContributions} />
+        </div>
+      </article>
     );
   } else {
     return <div>please login</div>;

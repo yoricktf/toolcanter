@@ -22,7 +22,9 @@ const Categories = async ({ params }) => {
       </header>
       <div className='resourcesBody'>
         <Tags currentCategory={category} />
-        <ResourcesList resources={filteredResources} />
+        <div className='cardSection'>
+          <ResourcesList resources={filteredResources} />
+        </div>
       </div>
     </>
   );
