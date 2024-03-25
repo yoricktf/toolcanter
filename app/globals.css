@@ -2,6 +2,8 @@
 @import '../styles/card.css';
 @import '../styles/header.css';
 @import '../styles/categorySelector.css';
+@import '../styles/profilePage.css';
+@import '../styles/resourcePage.css';
 
 main {
   padding-top: var(--nav-height);
@@ -70,7 +72,7 @@ main {
 }
 
 .active {
-  background-color: var(--action-blue);
+  background-color: var(--main-color);
 }
 
 :root {
@@ -79,7 +81,7 @@ main {
   --warn-red: #fc2828;
   --action-blue: #1a73e8;
   --submit-green: #32bd26;
-  /* --max-width: 1100px;
+  --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
@@ -118,7 +120,7 @@ main {
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
-  --card-background: 255, 255, 255; */
+  --card-background: 255, 255, 255;
 }
 
 /* @media (prefers-color-scheme: dark) {

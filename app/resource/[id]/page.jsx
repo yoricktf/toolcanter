@@ -10,6 +10,7 @@ import ResourcesList from '@/components/resourcesList';
 import Link from 'next/link';
 import Button from '@/components/button';
 import { revalidatePath } from 'next/cache';
+import Badge from '@/components/badge';
 
 const Page = async ({ params }) => {
   const session = await getServerSession(authOptions);
@@ -80,44 +81,49 @@ const Page = async ({ params }) => {
 
   return (
     <>
-      <article>
-        <Image
-          src={image}
-          height={90}
-          width={90}
-          alt={`image of the ${title} resource`}
-        />
-        <Image
-          src={contributorsPhoto}
-          alt='Picture of the author'
-          className='avatar'
-          height={30}
-          width={30}
-        />
-        <p>
-          added by{' '}
-          <Link href={`/profile/${author?.id}`}>{contributorsName}</Link>{' '}
-        </p>
-        <h1>{title}</h1>
-        <p>Description: {description}</p>
-        <Link href={url}>Check it out</Link>
-        <p>Added On: {new Date(createdAt).toDateString()}</p>
+      <article className='mainFacts'>
+        <div className='resourceDetails'>
+          <div>
+            <Image
+              src={image}
+              height={90}
+              width={90}
+              alt={`image of the ${title} resource`}
+            />
+            <Image
+              src={contributorsPhoto}
+              alt='Picture of the author'
+              className='avatar resourceAvatar'
+              height={30}
+              width={30}
+            />
+            <p>
+              added by{' '}
+              <Link href={`/profile/${author?.id}`}>{contributorsName}</Link>{' '}
+            </p>
+            <h1>{title}</h1>
+            <p>Added On: {new Date(createdAt).toDateString()}</p>
+            <Link href={url}>
+              <p className='checkButton'>Check it out</p>
+            </Link>
+            {session?.user.admin && (
+              <form action={handleDelete}>
+                <button className='checkButton'>delete the resource</button>
+              </form>
+            )}
+            {session && (
+              <Button handleAction={handleFavorite} state={isFavorite} />
+            )}
+          </div>
+          <p className='resourceDescription'>Description: {description}</p>
+        </div>
         <div className='tags'>
           {categories.map((category) => (
-            <p key={category}>{category}</p>
+            <Badge key={category}>{category}</Badge>
           ))}
         </div>
-
-        {session?.user.admin && (
-          <>
-            <form action={handleDelete}>
-              <button>delete the resource</button>
-            </form>
-          </>
-        )}
-        {session && <Button handleAction={handleFavorite} state={isFavorite} />}
       </article>
-      <section>
+      <section className='cardSection'>
         <h2>Similar Resources</h2>
         <ResourcesList resources={similarResources} />
       </section>
