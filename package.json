@@ -28,6 +28,7 @@
     "resend": "^1.0.0",
     "styled-components": "^6.1.8",
     "swr": "^2.2.4",
+    "tinycolor2": "^1.6.0",
     "typescript": "5.0.4"
   }
 }
