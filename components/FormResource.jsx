@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormResource = () => {
+const FormResource = ({ handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor='title'>title:</label>

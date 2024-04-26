@@ -6,8 +6,6 @@ import ResourcesList from '@/components/ResourcesList';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/lib/auth';
 import User from '@/models/User';
-import Image from 'next/image';
-import Link from 'next/link';
 import QuickFavorites from '@/components/quickFavorites';
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -21,10 +19,11 @@ export default async function Home() {
   const latestResources = await Resource.find({ published: true })
     .sort({ createdAt: -1 }) // Sorting by createdAt field in descending order
     .limit(5);
-  const { favorites } = await User.findById(session?.user.id, {
-    favorites: 1,
-    _id: 0,
-  }).populate('favorites');
+
+  // const { favorites } = await User.findById(session?.user.id, {
+  //   favorites: 1,
+  //   _id: 0,
+  // }).populate('favorites');
 
   return (
     <>
@@ -35,7 +34,7 @@ export default async function Home() {
           tools and resources that I have put together for myself and anyone
           else that is interested in Web Development
         </p>
-        <QuickFavorites />
+        {session && <QuickFavorites />}
       </header>
 
       <div className='resourcesBody'>

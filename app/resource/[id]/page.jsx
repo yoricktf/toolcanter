@@ -107,9 +107,17 @@ const Page = async ({ params }) => {
               <p className='checkButton'>Check it out</p>
             </Link>
             {session?.user.admin && (
-              <form action={handleDelete}>
-                <button className='checkButton'>delete the resource</button>
-              </form>
+              <>
+                <form action={handleDelete}>
+                  <button className='checkButton'>delete the resource</button>
+                </form>
+                <Link
+                  className='checkButton'
+                  href={`/resource/${params.id}/edit`}
+                >
+                  Edit
+                </Link>
+              </>
             )}
             {session && (
               <Button handleAction={handleFavorite} state={isFavorite} />

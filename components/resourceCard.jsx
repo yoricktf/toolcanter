@@ -15,13 +15,12 @@ const ResourceCard = ({ resource }) => {
         <h4>{resource.title}</h4>
       </Link>
       <section className='cardCategories'>
-        {resource.categories.map((category) => (
-          <>
-            <Link key={category} href={`/category/${category}`}>
-              {category}
-            </Link>
-            <p> | </p>
-          </>
+        {resource.categories.map((category, index) => (
+          <Link key={category} href={`/category/${category}`}>
+            {/* {index} */}
+            {category}
+            {index ? '| ' : '*'}
+          </Link>
         ))}
       </section>
     </div>

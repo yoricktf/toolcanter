@@ -72,10 +72,7 @@ const Recommend = () => {
     return (
       <main className={`${styles.main} main`}>
         <h1>Recommend</h1>
-        <p>
-          Recommend page you think would work here! just fill out the form and I
-          will check it out and post it up.
-        </p>
+        <p>Recommend what you think would work here! just fill out the form.</p>
         <form id={`${styles.Forms} Forms`} onSubmit={handleSubmit}>
           <label htmlFor='title'>Title:</label>
           <input name='title' type='text' />
